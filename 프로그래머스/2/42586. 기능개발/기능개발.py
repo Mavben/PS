@@ -1,20 +1,20 @@
-def solution(progresses, speeds):
+import math
 
+def solution(progresses, speeds):
     answer = []
-    time = 0
-    count = 0
+    n = len(progresses)
+    days_left = [math.ceil((100 - progresses[i]) / speeds[i]) for i in range(n)]
     
-    while len(progresses)> 0:
-        if (progresses[0] + time*speeds[0]) >= 100: 
-            progresses.pop(0)
-            speeds.pop(0)
+    count = 0
+    max_day = days_left[0]
+    
+    for i in range(n):
+        if days_left[i] <= max_day:
             count += 1
-            
         else:
-            if count > 0:
-                answer.append(count)
-                count = 0
-            time += 1
+            answer.append(count)
+            count = 1
+            max_day = days_left[i]
             
     answer.append(count)
     return answer
